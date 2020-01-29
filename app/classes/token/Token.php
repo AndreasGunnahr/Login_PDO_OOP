@@ -1,5 +1,9 @@
 <?php
 
+namespace Token;
+
+use Session\Session;
+
 class Token
 {
     public static function generate()

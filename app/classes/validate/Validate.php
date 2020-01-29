@@ -1,5 +1,9 @@
 <?php
 
+namespace Validate;
+
+use Db\Database;
+
 class Validate extends Database
 {
     private $passed;

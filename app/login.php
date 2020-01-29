@@ -1,6 +1,12 @@
 <?php
 include './includes/header.php';
 require_once './includes/autoloader.php';
+spl_autoload_register('myAutoLoader');
+
+use Input\Input;
+use Token\Token;
+use Validate\Validate;
+use Session\Session;
 
 if (Input::exists()) {
     if (Token::check(Input::get("token"))) {
@@ -15,7 +21,6 @@ if (Input::exists()) {
         ));
         
         if ($validate->passed()) {
-            $user = new User();
             $login = $user->login(
                 Input::get('username'),
                 Input::get('password')
@@ -37,10 +42,10 @@ if (Input::exists()) {
         <input class="form-control mr-sm-2 my-2" type="password" name = "password" placeholder="Password">
         <input type = "hidden" name = "token" value = "<?php echo Token::generate(); ?>">
         <?php
-            if (Session::exists('error')) {
-                $message = Session::flashMessage('error');
-                echo "<h6 class = 'text-danger'>{$message}</h6>";
-            }
+        if (Session::exists('error')) {
+            $message = Session::flashMessage('error');
+            echo "<h6 class = 'text-danger'>{$message}</h6>";
+        }
         ?>
         <button class="btn bg-dark text-white my-2 btn-lg" name = "register-submit" type="submit">Sign in</button>
     </form>
